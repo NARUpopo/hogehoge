@@ -2,6 +2,7 @@
 #include "uart.h"
 #include "adc.h"
 #include "pwm.h"
+#include "define.h"
 
 void run(void) 
 {
@@ -10,8 +11,6 @@ void run(void)
     char sensor;
     
     RB6 = HIGH; //redLED turn on
-
-
 
     while(1){
         /*
