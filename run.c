@@ -2,7 +2,7 @@
 #include "uart.h"
 #include "adc.h"
 #include "pwm.h"
-#include "define_hoge.h"
+#include "define.h"
 
 void run(void) 
 {
