@@ -5,16 +5,15 @@
 
 void run(void) 
 {
-    while(1){
-                 
-        
-        // 例1. LED点滅 
-        RA5 = 1;
-        __delay_ms(500);
-        RA5 = 0;
-        __delay_ms(500);
-        
 
+    double ave=0;  //閾値の変数宣言
+    char sensor;
+    
+    RB6 = HIGH; //redLED turn on
+
+
+
+    while(1){
         /*
         // 例2. ディジタル入力
         if(RA4 == 0) RA5 = 1;
@@ -27,28 +26,63 @@ void run(void)
         else RA5 = 0;
         */
 
-        /*       
-        // 例4. PWM
-        // pwm1〜4(周期,幅)
-        // 周期と幅はマイクロ秒で指定(最大 16383 マイクロ秒)
-        pwm1(1000,500);
-        __delay_ms(1000);
-        pwm1(2000,1000);
-        __delay_ms(1000);
-        */
+        if(RC3 == HIGH){
+        
+            RB6 = LOW; // redLED turn off
+            RB7 = HIGH;  //greenLED turn on
+        
+            while (1) {        
+            
+                //ADC start
+                ave = (RC0 + RC1)/2;  //閾値の決定
+            
+                while(RC0 < ave){
+                    RB4 = LOW;   //右輪停止
+                    RB5 = HIGH;  //左輪稼働
+                
+                    //scan wall
+                    if(RC2 == HIGH){
+                        RB4 = LOW;  //moter stop
+                        RB5 = LOW;  //moter stop
+                        RB6 = HIGH; //redLED turn on
+                        RB7 = LOW;  //greenLED turn off
+                    
+                        break;
+                    }
+                }
+            
+            while(RC0 >= ave){
+                RB5 = LOW;   //左輪停止
+                RB4 = HIGH;  //右輪稼働
+                
+                //scan wall
+                if(RC2 == HIGH){
+                    RB4 = LOW;  //moter stop
+                    RB5 = LOW;  //moter stop
+                    RB6 = HIGH; //redLED turn on
+                    RB7 = LOW;  //greenLED turn off
+                    
+                    break;
+                }
+            }
+            
+            /*
+            //scan wall
+            if(RC2 == HIGH){
+                
+                RB4 = LOW;  //moter stop
+                RB5 = LOW;  //moter stop
+                RB6 = HIGH; //redLED turn on
+                RB7 = LOW;  //greenLED turn off
+            }
+            */
+            
 
-        /* 
-        // 例5. シリアル通信
-        int c = getch();
-        if( c == 'a'){
-            RA5 = 1;
-            printf("ON\r\n");
-        }
-        if( c == 'b'){
-            RA5 = 0;
-            printf("OFF\r\n");
-        }
-        */
+         }
+
+       
+
+
     }
 
     return;
