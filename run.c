@@ -7,13 +7,13 @@ void run(void)
 {
     while(1){
                  
-        /*
+        
         // 例1. LED点滅 
         RA5 = 1;
         __delay_ms(500);
         RA5 = 0;
         __delay_ms(500);
-        */
+        
 
         /*
         // 例2. ディジタル入力
